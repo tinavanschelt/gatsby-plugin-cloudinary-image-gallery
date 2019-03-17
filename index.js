@@ -23,7 +23,7 @@ require("photoSwipe/dist/photoswipe.css");
 
 var _PhotoSwipeDOM = _interopRequireDefault(require("./PhotoSwipeDOM"));
 
-var _jsxFileName = "/Users/tina/repos/gatsby/gatsby-google-photos-gallery-example/plugins/gatsby-cloudinary-image-gallery/src/index.js";
+var _jsxFileName = "/Users/tina/repos/gatsby/gatsby-plugin-cloudinary-image-gallery/src/index.js";
 
 const getImageSize = (width, height, orientation) => {
   if (orientation === "square") {

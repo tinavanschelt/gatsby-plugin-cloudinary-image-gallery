@@ -7,7 +7,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _jsxFileName = "/Users/tina/repos/gatsby/gatsby-google-photos-gallery-example/plugins/gatsby-cloudinary-image-gallery/src/PhotoSwipeDOM.js";
+var _jsxFileName = "/Users/tina/repos/gatsby/gatsby-plugin-cloudinary-image-gallery/src/PhotoSwipeDOM.js";
 
 function PhotoSwipeDOM() {
   return _react.default.createElement("div", {
