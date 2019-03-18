@@ -1,6 +1,6 @@
 "use strict";
 
-const cloudinary = require("cloudinary");
+const cloudinary = require('cloudinary');
 
 exports.sourceNodes = async ({
   actions,
@@ -15,9 +15,9 @@ exports.sourceNodes = async ({
   } = configOptions;
   const queryParams = {
     tags: true,
-    type: "upload",
+    type: 'upload',
     max_results: `24`,
-    resource_type: "image"
+    resource_type: 'image'
   };
   delete configOptions.plugins;
   cloudinary.config({
@@ -28,19 +28,19 @@ exports.sourceNodes = async ({
 
   const getImageOrientation = (width, height) => {
     if (height === width) {
-      return "square";
+      return 'square';
     } else if (height > width) {
-      return "portrait";
+      return 'portrait';
     } else {
-      return "landscape";
+      return 'landscape';
     }
   };
 
   const processMediaItem = (image, folder) => {
     const nodeId = createNodeId(`cloudinary-image-${image.public_id}`);
     const orientation = getImageOrientation(image.width, image.height);
-    const thumb = `http://res.cloudinary.com/${configOptions.cloudName}/image/upload/w_600/v${image.version}/${image.public_id}.${image.format}`;
-    const imgUrl = orientation === "portrait" ? `http://res.cloudinary.com/${configOptions.cloudName}/image/upload/h_1200/v${image.version}/${image.public_id}.${image.format}` : `http://res.cloudinary.com/${configOptions.cloudName}/image/upload/w_1200/v${image.version}/${image.public_id}.${image.format}`;
+    const thumb = `https://res.cloudinary.com/${configOptions.cloudName}/image/upload/w_600/v${image.version}/${image.public_id}.${image.format}`;
+    const imgUrl = orientation === 'portrait' ? `https://res.cloudinary.com/${configOptions.cloudName}/image/upload/h_1200/v${image.version}/${image.public_id}.${image.format}` : `https://res.cloudinary.com/${configOptions.cloudName}/image/upload/w_1200/v${image.version}/${image.public_id}.${image.format}`;
     const imageData = Object.assign({
       folder,
       imgUrl,
