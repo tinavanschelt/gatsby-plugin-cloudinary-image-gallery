@@ -1,70 +1,70 @@
-import React, { Component, Fragment } from "react"
-import PropTypes from "prop-types"
-import styled from "styled-components"
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import PhotoSwipe from "photoswipe"
-import PhotoSwipeUI_Default from "photoSwipe/dist/photoswipe-ui-default"
-import "photoSwipe/dist/default-skin/default-skin.css"
-import "photoSwipe/dist/photoswipe.css"
+import PhotoSwipe from 'photoswipe';
+import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
+import 'photoswipe/dist/default-skin/default-skin.css';
+import 'photoswipe/dist/photoswipe.css';
 
-import PhotoSwipeDOM from "./PhotoSwipeDOM"
+import PhotoSwipeDOM from './PhotoSwipeDOM';
 
 const getImageSize = (width, height, orientation) => {
-  if (orientation === "square") {
-    return { width: 1200, height: 1200 }
-  } else if (orientation === "portrait") {
+  if (orientation === 'square') {
+    return { width: 1200, height: 1200 };
+  } else if (orientation === 'portrait') {
     // portrait
-    const ratio = height / width
-    return { width: 1200, height: parseInt(ratio * 1200, 10) }
+    const ratio = height / width;
+    return { width: 1200, height: parseInt(ratio * 1200, 10) };
   } else {
     // landscape
-    const ratio = width / height
-    return { width: parseInt(ratio * 1200, 10), height: 1200 }
+    const ratio = width / height;
+    return { width: parseInt(ratio * 1200, 10), height: 1200 };
   }
-}
+};
 
 const imgContainerPadding = orientation => {
-  if (orientation === "square") {
+  if (orientation === 'square') {
     // square
-    return "100%"
-  } else if (orientation === "portrait") {
+    return '100%';
+  } else if (orientation === 'portrait') {
     // portrait
-    return "130%"
+    return '130%';
   } else {
     // landscape
-    return "70%"
+    return '70%';
   }
-}
+};
 
 const openPhotoSwipe = (items, index) => {
-  const pswpElement = document.querySelectorAll(".pswp")[0]
+  const pswpElement = document.querySelectorAll('.pswp')[0];
 
   var options = {
     index,
     showAnimationDuration: 0,
-    hideAnimationDuration: 0,
-  }
+    hideAnimationDuration: 0
+  };
 
   var gallery = new PhotoSwipe(
     pswpElement,
     PhotoSwipeUI_Default,
     items,
     options
-  )
+  );
 
-  gallery.init()
-}
+  gallery.init();
+};
 
 const renderImageGridItem = (img, galleryItems, orientation, index) => {
-  const imgOrientation = orientation ? orientation : img.node.orientation
+  const imgOrientation = orientation ? orientation : img.node.orientation;
 
   const imgSize = getImageSize(
     img.node.width,
     img.node.height,
     img.node.orientation
-  )
+  );
 
-  const containerPadding = imgContainerPadding(imgOrientation)
+  const containerPadding = imgContainerPadding(imgOrientation);
 
   return (
     <ImageGridItem
@@ -77,31 +77,31 @@ const renderImageGridItem = (img, galleryItems, orientation, index) => {
       padding={containerPadding}
       itemProp="contentUrl"
     />
-  )
-}
+  );
+};
 
 const renderRows = (columns, images, galleryItems, orientation) => {
-  let counter = 0
+  let counter = 0;
 
   return columns.map((row, index) => {
     if (index !== 0) {
-      counter = counter + columns[index - 1]
+      counter = counter + columns[index - 1];
     }
 
-    const rowImages = images.slice(counter, counter + row)
+    const rowImages = images.slice(counter, counter + row);
 
     return (
       <ImageGridRow columns={row} key={counter} imgCount={row}>
         {rowImages.map(img => {
           const index = galleryItems.findIndex(
             item => item.filename === img.node.filename
-          )
-          return renderImageGridItem(img, galleryItems, orientation, index)
+          );
+          return renderImageGridItem(img, galleryItems, orientation, index);
         })}
       </ImageGridRow>
-    )
-  })
-}
+    );
+  });
+};
 
 const getListOfGalleryItems = (images, imagesVisibleCount) => {
   let items = images.map(image => {
@@ -109,47 +109,47 @@ const getListOfGalleryItems = (images, imagesVisibleCount) => {
       publicId: image.node.public_id,
       src: `${image.node.imgUrl}`,
       w: image.node.width,
-      h: image.node.height,
-    }
-  })
+      h: image.node.height
+    };
+  });
 
   if (imagesVisibleCount && items.length > imagesVisibleCount) {
-    items = items.slice(0, imagesVisibleCount)
+    items = items.slice(0, imagesVisibleCount);
   }
 
-  return items
-}
+  return items;
+};
 
-const isOdd = num => num % 2
+const isOdd = num => num % 2;
 
 class ImageGrid extends Component {
   componentDidMount() {
-    window.PhotoSwipe = PhotoSwipe
-    window.PhotoSwipeUI_Default = PhotoSwipeUI_Default
+    window.PhotoSwipe = PhotoSwipe;
+    window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
   }
 
   render() {
-    const { folder, columns, data, orientation } = this.props
-    let imageGridColumns = 2
-    let columnsPerRow
-    let galleryItems
+    const { folder, columns, data, orientation } = this.props;
+    let imageGridColumns = 2;
+    let columnsPerRow;
+    let galleryItems;
 
     const images = data.cloudinaryImage.edges.filter(
       image => image.node.folder === folder
-    )
+    );
 
     if (isOdd(images.length) === 1) {
-      imageGridColumns = 3
+      imageGridColumns = 3;
     }
 
     if (columns && columns.length > 0) {
-      columnsPerRow = columns.split(",").map(Number)
+      columnsPerRow = columns.split(',').map(Number);
       const imagesVisibleCount = columnsPerRow.reduce(
         (partialSum, a) => partialSum + a
-      )
-      galleryItems = getListOfGalleryItems(images, imagesVisibleCount)
+      );
+      galleryItems = getListOfGalleryItems(images, imagesVisibleCount);
     } else {
-      galleryItems = getListOfGalleryItems(images)
+      galleryItems = getListOfGalleryItems(images);
     }
 
     return (
@@ -169,20 +169,20 @@ class ImageGrid extends Component {
         </ImageGridWrapper>
         <PhotoSwipeDOM />
       </Fragment>
-    )
+    );
   }
 }
 
 const ImageGridWrapper = styled.div`
   display: block;
-`
+`;
 
 const ImageGridRow = styled.div`
   display: grid;
   grid-gap: 1em;
   grid-template-columns: ${props => `repeat(${props.columns}, 1fr)`};
   margin-bottom: 1em;
-`
+`;
 
 const ImageGridItem = styled.a`
   background-size: cover;
@@ -193,10 +193,10 @@ const ImageGridItem = styled.a`
   padding-bottom: ${props => props.padding};
   display: inline-block;
   width: 100%;
-`
+`;
 
 ImageGrid.propTypes = {
-  folder: PropTypes.string.isRequired,
-}
+  folder: PropTypes.string.isRequired
+};
 
-export default ImageGrid
+export default ImageGrid;

@@ -1,8 +1,8 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
-
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
 
 exports.__esModule = true;
 exports.default = void 0;
@@ -22,8 +22,6 @@ require("photoSwipe/dist/default-skin/default-skin.css");
 require("photoSwipe/dist/photoswipe.css");
 
 var _PhotoSwipeDOM = _interopRequireDefault(require("./PhotoSwipeDOM"));
-
-var _jsxFileName = "/Users/tina/repos/gatsby/gatsby-plugin-cloudinary-image-gallery/src/index.js";
 
 const getImageSize = (width, height, orientation) => {
   if (orientation === "square") {
@@ -84,12 +82,7 @@ const renderImageGridItem = (img, galleryItems, orientation, index) => {
     imgUrl: `${img.node.imgUrl}`,
     orientation: imgOrientation,
     padding: containerPadding,
-    itemProp: "contentUrl",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 70
-    },
-    __self: void 0
+    itemProp: "contentUrl"
   });
 };
 
@@ -104,12 +97,7 @@ const renderRows = (columns, images, galleryItems, orientation) => {
     return _react.default.createElement(ImageGridRow, {
       columns: row,
       key: counter,
-      imgCount: row,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 94
-      },
-      __self: void 0
+      imgCount: row
     }, rowImages.map(img => {
       const index = galleryItems.findIndex(item => item.filename === img.node.filename);
       return renderImageGridItem(img, galleryItems, orientation, index);
@@ -143,12 +131,11 @@ class ImageGrid extends _react.Component {
   }
 
   render() {
-    const {
-      folder,
-      columns,
-      data,
-      orientation
-    } = this.props;
+    const _this$props = this.props,
+          folder = _this$props.folder,
+          columns = _this$props.columns,
+          data = _this$props.data,
+          orientation = _this$props.orientation;
     let imageGridColumns = 2;
     let columnsPerRow;
     let galleryItems;
@@ -166,38 +153,9 @@ class ImageGrid extends _react.Component {
       galleryItems = getListOfGalleryItems(images);
     }
 
-    return _react.default.createElement(_react.Fragment, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 156
-      },
-      __self: this
-    }, _react.default.createElement(ImageGridWrapper, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 157
-      },
-      __self: this
-    }, columns && columns.length > 0 ? _react.default.createElement(_react.Fragment, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 159
-      },
-      __self: this
-    }, renderRows(columnsPerRow, images, galleryItems, orientation)) : _react.default.createElement(ImageGridRow, {
-      columns: imageGridColumns,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 163
-      },
-      __self: this
-    }, images.map((img, index) => renderImageGridItem(img, galleryItems, orientation, index)))), _react.default.createElement(_PhotoSwipeDOM.default, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 170
-      },
-      __self: this
-    }));
+    return _react.default.createElement(_react.Fragment, null, _react.default.createElement(ImageGridWrapper, null, columns && columns.length > 0 ? _react.default.createElement(_react.Fragment, null, renderRows(columnsPerRow, images, galleryItems, orientation)) : _react.default.createElement(ImageGridRow, {
+      columns: imageGridColumns
+    }, images.map((img, index) => renderImageGridItem(img, galleryItems, orientation, index)))), _react.default.createElement(_PhotoSwipeDOM.default, null));
   }
 
 }
