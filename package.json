@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-cloudinary-image-gallery",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A grid-based PhotoSwipe image gallery that sources images from Cloudinary",
   "author": "tinavanschelt <tinavanschelt@gmail.com>",
   "repository": "https://github.com/tinavanschelt/gatsby-plugin-cloudinary-image-gallery.git",
