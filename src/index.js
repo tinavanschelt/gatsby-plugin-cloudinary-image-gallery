@@ -109,7 +109,9 @@ const getListOfGalleryItems = (images, imagesVisibleCount) => {
       publicId: image.node.public_id,
       src: `${image.node.imgUrl}`,
       w: image.node.width,
-      h: image.node.height
+      h: image.node.height,
+      title: image.node.context && image.node.context.custom && image.node.context.custom.alt ? image.node.context.custom.alt : '',
+      caption: image.node.context && image.node.context.custom && image.node.context.custom.caption ? image.node.context.custom.caption : '',
     };
   });
 
