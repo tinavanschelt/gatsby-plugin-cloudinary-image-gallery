@@ -10,7 +10,8 @@ exports.sourceNodes = async (
     tags: true,
     type: 'upload',
     max_results: `24`,
-    resource_type: 'image'
+    resource_type: 'image',
+    context: true,
   };
 
   delete configOptions.plugins;
@@ -50,7 +51,17 @@ exports.sourceNodes = async (
             image.format
           }`;
     const imageData = Object.assign(
-      { folder, imgUrl, thumb, orientation },
+      { folder,
+        imgUrl,
+        thumb,
+        orientation,
+        context: {
+          custom: {
+            alt: '',
+            caption: ''
+          }
+        },
+      },
       image
     );
 
