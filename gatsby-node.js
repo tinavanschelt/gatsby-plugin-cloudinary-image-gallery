@@ -11,12 +11,12 @@ exports.sourceNodes = async ({
     createNode
   } = actions;
   const {
-    folders
+    folders, max_results
   } = configOptions;
   const queryParams = {
     tags: true,
     type: 'upload',
-    max_results: `24`,
+    max_results: max_results || `24`,
     resource_type: 'image'
   };
   delete configOptions.plugins;
